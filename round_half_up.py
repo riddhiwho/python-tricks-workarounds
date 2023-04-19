@@ -1,13 +1,17 @@
 from decimal import Decimal
 
 def round_half_up(num, d):
-    multiplier = 10 ** (d)
-    num = Decimal(str(num)) * multiplier
-    if num>0:  
-        new_num = Decimal(num) + Decimal('0.5')
+    if type(num)==float or type(num)==str:
+        multiplier = 10 ** (d)
+        num=Decimal(num)
+        if num>0:  
+            num = Decimal(str(num)) * multiplier
+            new_num = Decimal(num) + Decimal('0.5')
+            return int(new_num)/multiplier
+        else:
+            new_num=round_half_up(str(Decimal(num) *-1), d)*-1
+            if new_num!=int(num*multiplier)/multiplier:
+                new_num=Decimal(str(new_num))+Decimal(str(2/multiplier))
+            return new_num        
     else:
-        new_num = Decimal(num) + Decimal('1.0')
-    final_num = int(new_num)/multiplier
-    return final_num
-
-print(round_half_up(17.445, 2))
+        return float(num)
