@@ -1,7 +1,10 @@
 from decimal import Decimal
+import math 
 
 def round_half_up(num, d):
     if type(num)==float or type(num)==str:
+        if math.isnan(num):
+            return num
         multiplier = 10 ** (d)
         num=Decimal(str(num))
         if num>0:
